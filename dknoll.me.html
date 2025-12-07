@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DKNOLL - Be Like Water</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            overflow-x: hidden;
+            color: #fff;
+        }
+
+        /* Hero Section with Video Background */
+        .hero {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        /* Water animation background */
+        .water-background {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+            z-index: 1;
+        }
+
+        /* Dark overlay for better text readability - adjusted for ocean colors */
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, 
+                rgba(10, 35, 50, 0.4) 0%, 
+                rgba(15, 50, 70, 0.5) 50%,
+                rgba(20, 60, 85, 0.6) 100%);
+            z-index: 2;
+        }
+
+        /* Logo/Header */
+        .header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 2rem;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 3px solid rgba(100, 181, 246, 0.6);
+            box-shadow: 0 4px 12px rgba(0, 100, 150, 0.4);
+        }
+
+        .site-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Main Content */
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            text-align: center;
+            max-width: 900px;
+            padding: 2rem;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero-title {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 900;
+            letter-spacing: 0.05em;
+            margin-bottom: 2rem;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+            line-height: 1.1;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+            line-height: 1.8;
+            font-weight: 300;
+            max-width: 700px;
+            margin: 0 auto 3rem;
+            text-shadow: 0 2px 12px rgba(0, 0, 0, 0.7);
+            opacity: 0.95;
+        }
+
+        /* CTA Button */
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 3rem;
+            background: rgba(79, 195, 247, 0.2);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(79, 195, 247, 0.4);
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+        }
+
+        .cta-button:hover {
+            background: rgba(79, 195, 247, 0.3);
+            border-color: rgba(79, 195, 247, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(79, 195, 247, 0.3);
+        }
+
+        /* Scroll Indicator - Mobile Only */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 3rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 3;
+            animation: bounce 2s infinite;
+        }
+
+        .scroll-arrow {
+            width: 30px;
+            height: 50px;
+            border: 2px solid rgba(255, 255, 255, 0.6);
+            border-radius: 20px;
+            position: relative;
+            transform: rotate(180deg);
+        }
+
+        .scroll-arrow::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            animation: scroll 2s infinite;
+        }
+
+        /* Hide scroll indicator on tablet and larger */
+        @media (min-width: 769px) {
+            .scroll-indicator {
+                display: none;
+            }
+        }
+
+        /* Footer */
+        footer {
+            position: relative;
+            background: linear-gradient(180deg, #0a3344 0%, #051820 100%);
+            padding: 5rem 2rem 2rem;
+            overflow: hidden;
+        }
+
+        /* Subtle wave divider */
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100px;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M0,60 C150,90 350,0 600,60 C850,120 1050,30 1200,60 L1200,120 L0,120 Z" fill="%230f3854" opacity="0.8"/><path d="M0,80 C200,40 400,100 600,80 C800,60 1000,100 1200,80 L1200,120 L0,120 Z" fill="%230f3854"/></svg>') no-repeat;
+            background-size: cover;
+            transform: translateY(-99px);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 4rem;
+            align-items: end;
+        }
+
+        .footer-left {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .footer-brand {
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            color: rgba(255, 255, 255, 0.95);
+            margin: 0;
+        }
+
+        .footer-tagline {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.5);
+            font-style: italic;
+            letter-spacing: 0.05em;
+            margin: 0;
+        }
+
+        .footer-right {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            align-items: flex-end;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-size: 0.9rem;
+            letter-spacing: 0.05em;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .footer-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: #4fc3f7;
+            transition: width 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #4fc3f7;
+        }
+
+        .footer-links a:hover::after {
+            width: 100%;
+        }
+
+        .footer-middle {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .footer-email {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 1.1rem;
+            letter-spacing: 0.02em;
+            transition: all 0.3s ease;
+            font-weight: 300;
+        }
+
+        .footer-email:hover {
+            color: #4fc3f7;
+            letter-spacing: 0.05em;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .social-links a {
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: none;
+            font-size: 0.85rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: #4fc3f7;
+            transform: translateY(-2px);
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 4rem auto 0;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.4);
+            letter-spacing: 0.05em;
+        }
+
+        .footer-bottom a {
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-bottom a:hover {
+            color: #4fc3f7;
+        }
+
+        /* Content Section */
+        .content-section {
+            background: linear-gradient(180deg, #0f3854 0%, #1a4a66 50%, #255f7d 100%);
+            padding: 6rem 2rem;
+            position: relative;
+        }
+
+        .content-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            margin-top: 4rem;
+        }
+
+        .content-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 2.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .content-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-5px);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .content-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: #4fc3f7;
+        }
+
+        .content-card p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            text-align: center;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.7);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Projects Section */
+        .projects-section {
+            margin-top: 6rem;
+        }
+
+        .projects-title {
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: rgba(79, 195, 247, 0.08);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(79, 195, 247, 0.15);
+            border-radius: 12px;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover {
+            background: rgba(79, 195, 247, 0.12);
+            border-color: rgba(79, 195, 247, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(79, 195, 247, 0.15);
+        }
+
+        .project-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #4fc3f7;
+            letter-spacing: 0.02em;
+        }
+
+        .project-url {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
+            font-family: 'Courier New', monospace;
+            letter-spacing: 0.02em;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            40% {
+                transform: translateX(-50%) translateY(-10px);
+            }
+            60% {
+                transform: translateX(-50%) translateY(-5px);
+            }
+        }
+
+        @keyframes scroll {
+            0% {
+                opacity: 0;
+                top: 10px;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                top: 30px;
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header {
+                padding: 1.5rem;
+            }
+
+            .logo {
+                width: 60px;
+                height: 60px;
+            }
+
+            .site-title {
+                font-size: 1.2rem;
+            }
+
+            .hero-content {
+                padding: 1rem;
+            }
+
+            .hero-title {
+                margin-bottom: 1.5rem;
+            }
+
+            .hero-subtitle {
+                margin-bottom: 2rem;
+            }
+
+            .cta-button {
+                padding: 0.875rem 2rem;
+                font-size: 1rem;
+            }
+
+            .content-section {
+                padding: 4rem 1.5rem;
+            }
+
+            .content-grid {
+                gap: 2rem;
+            }
+
+            .projects-section {
+                margin-top: 4rem;
+            }
+
+            .projects-title {
+                font-size: 1.75rem;
+            }
+
+            .projects-grid {
+                gap: 1.5rem;
+            }
+
+            .scroll-indicator {
+                bottom: 2rem;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 3rem;
+            }
+
+            .footer-left {
+                align-items: center;
+            }
+
+            .footer-right {
+                align-items: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo-container {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+
+            .logo {
+                width: 50px;
+                height: 50px;
+            }
+
+            .site-title {
+                font-size: 1rem;
+            }
+
+            .content-card {
+                padding: 2rem;
+            }
+
+            .footer-content {
+                gap: 2.5rem;
+            }
+
+            .footer-brand {
+                font-size: 1.5rem;
+            }
+
+            .footer-links {
+                gap: 1.5rem;
+            }
+
+            .social-links {
+                gap: 1.5rem;
+            }
+        }
+
+        /* Fallback for no video support */
+        .hero-fallback {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0a4a5c 0%, #1a6b7f 50%, #2a8ca3 100%);
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <!-- Water Animation Background -->
+        <video 
+            autoplay 
+            loop 
+            muted 
+            playsinline 
+            class="water-background"
+            poster="https://i.ibb.co/gZJ8439H/Surf-school-video-poster-HD.jpg">
+            <source src="https://your-cdn.com/water-animation.webm" type="video/webm">
+            <div class="hero-fallback"></div>
+        </video>
+
+        <!-- Header with Logo -->
+        <header class="header">
+            <div class="logo-container">
+                <img src="https://your-cdn.com/logo.jpeg" alt="DKNOLL Logo" class="logo">
+                <div class="site-title">DKNOLL</div>
+            </div>
+        </header>
+
+        <!-- Main Hero Content -->
+        <div class="hero-content">
+            <h1 class="hero-title">BE LIKE WATER</h1>
+            <p class="hero-subtitle">
+                You need deep understanding, experience, authority, and attention to detail.<br>
+                This project can just flow - if you let it!
+            </p>
+            <a href="#about" class="cta-button">Learn More</a>
+        </div>
+
+        <!-- Scroll Indicator (Mobile Only) -->
+        <div class="scroll-indicator">
+            <div class="scroll-arrow"></div>
+        </div>
+    </section>
+
+    <!-- Content Section -->
+    <section class="content-section" id="about">
+        <div class="content-container">
+            <h2 class="section-title">Flow With Purpose</h2>
+            <p class="section-subtitle">
+                Like water, the best solutions adapt to their environment while maintaining their essential nature
+            </p>
+
+            <div class="content-grid">
+                <div class="content-card">
+                    <h3>Deep Understanding</h3>
+                    <p>Water finds every crack, every opening. True expertise comes from thorough exploration and understanding of every detail.</p>
+                </div>
+
+                <div class="content-card">
+                    <h3>Adaptive Experience</h3>
+                    <p>Water takes the shape of its container. Experience teaches us to adapt our approach while staying true to core principles.</p>
+                </div>
+
+                <div class="content-card">
+                    <h3>Natural Authority</h3>
+                    <p>Water carves canyons through persistent presence. Authority comes not from force, but from consistent, reliable expertise.</p>
+                </div>
+
+                <div class="content-card">
+                    <h3>Attention to Detail</h3>
+                    <p>Like water revealing the finest grain in stone, quality work emerges from meticulous care in every aspect of the process.</p>
+                </div>
+            </div>
+
+            <!-- Projects Section -->
+            <div class="projects-section">
+                <h3 class="projects-title">What I'm Doing</h3>
+                <div class="projects-grid">
+                    <a href="https://DoMoreThanSurvive.com" target="_blank" rel="noopener" class="project-card">
+                        <span class="project-name">Thrive Wellness</span>
+                        <span class="project-url">DoMoreThanSurvive.com</span>
+                    </a>
+                    <a href="https://TotalShiftMarketing.com" target="_blank" rel="noopener" class="project-card">
+                        <span class="project-name">Total Shift Marketing</span>
+                        <span class="project-url">TotalShiftMarketing.com</span>
+                    </a>
+                    <a href="https://WorkOrderPro.com" target="_blank" rel="noopener" class="project-card">
+                        <span class="project-name">Work Order Pro CMMS</span>
+                        <span class="project-url">WorkOrderPro.com</span>
+                    </a>
+                    <a href="https://DefinitelyMoreSecure.com" target="_blank" rel="noopener" class="project-card">
+                        <span class="project-name">Fractional CTO</span>
+                        <span class="project-url">DefinitelyMoreSecure.com</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-left">
+                <h2 class="footer-brand">DKNOLL</h2>
+                <p class="footer-tagline">Like Water.</p>
+            </div>
+            <div class="footer-right">
+                <nav class="footer-links">
+                    <a href="/about">About</a>
+                    <a href="/contact">Contact</a>
+                    <a href="/blog">Blog</a>
+                    <a href="/now">Now</a>
+                </nav>
+                <div class="footer-middle">
+                    <a href="mailto:hi@dknoll.me" class="footer-email">hi@dknoll.me</a>
+                </div>
+                <div class="social-links">
+                    <a href="https://fb.com/DannyKnoll17" target="_blank" rel="noopener">Facebook</a>
+                    <a href="https://linkedin.com" target="_blank" rel="noopener">LinkedIn</a>
+                    <a href="https://github.com" target="_blank" rel="noopener">GitHub</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span id="copyright">© 2024 DKNOLL</span>
+            <a href="#privacy">Privacy</a>
+        </div>
+    </footer>
+
+    <script>
+        // Update copyright year dynamically
+        document.getElementById('copyright').textContent = `© ${new Date().getFullYear()} DKNOLL`;
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Video fallback handling
+        const video = document.querySelector('.water-background');
+        const fallback = document.querySelector('.hero-fallback');
+        
+        video.addEventListener('error', () => {
+            fallback.style.display = 'block';
+        });
+
+        // Pause video when not in viewport for performance
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    video.play();
+                } else {
+                    video.pause();
+                }
+            });
+        });
+        
+        observer.observe(video);
+    </script>
+</body>
+</html>
