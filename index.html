@@ -528,23 +528,27 @@
                 padding: 4rem 1.5rem;
             }
 
-            .content-grid {
-                gap: 2rem;
-            }
-
             .projects-section {
-                margin-top: 4rem;
+                margin-bottom: 4rem;
             }
 
-            .projects-title {
-                font-size: 1.75rem;
+            .section-title {
+                font-size: 2rem;
             }
 
             .projects-grid {
                 gap: 1.5rem;
             }
 
-            .scroll-indicator {
+            .project-card {
+                padding: 2rem;
+            }
+
+            .contact-card {
+                padding: 2rem;
+            }
+
+            .footer-content {
                 bottom: 2rem;
             }
 
@@ -585,6 +589,14 @@
 
             .footer-content {
                 gap: 2.5rem;
+            }
+
+            .projects-section {
+                margin-bottom: 3rem;
+            }
+
+            .section-title {
+                font-size: 1.75rem;
             }
 
             .footer-brand {
@@ -639,10 +651,6 @@
         <!-- Main Hero Content -->
         <div class="hero-content">
             <h1 class="hero-title">BE LIKE WATER</h1>
-            <p class="hero-subtitle">
-                You need deep understanding, experience, authority, and attention to detail.<br>
-                This project can just flow - if you let it!
-            </p>
             <a href="#about" class="cta-button">Learn More</a>
         </div>
 
@@ -655,36 +663,9 @@
     <!-- Content Section -->
     <section class="content-section" id="about">
         <div class="content-container">
-            <h2 class="section-title">Flow With Purpose</h2>
-            <p class="section-subtitle">
-                Like water, the best solutions adapt to their environment while maintaining their essential nature
-            </p>
-
-            <div class="content-grid">
-                <div class="content-card">
-                    <h3>Deep Understanding</h3>
-                    <p>Water finds every crack, every opening. True expertise comes from thorough exploration and understanding of every detail.</p>
-                </div>
-
-                <div class="content-card">
-                    <h3>Adaptive Experience</h3>
-                    <p>Water takes the shape of its container. Experience teaches us to adapt our approach while staying true to core principles.</p>
-                </div>
-
-                <div class="content-card">
-                    <h3>Natural Authority</h3>
-                    <p>Water carves canyons through persistent presence. Authority comes not from force, but from consistent, reliable expertise.</p>
-                </div>
-
-                <div class="content-card">
-                    <h3>Attention to Detail</h3>
-                    <p>Like water revealing the finest grain in stone, quality work emerges from meticulous care in every aspect of the process.</p>
-                </div>
-            </div>
-
             <!-- Projects Section -->
             <div class="projects-section">
-                <h3 class="projects-title">What I'm Doing</h3>
+                <h3 class="section-title">What I'm Doing</h3>
                 <div class="projects-grid">
                     <a href="https://DoMoreThanSurvive.com" target="_blank" rel="noopener" class="project-card">
                         <span class="project-name">Thrive Wellness</span>
@@ -702,6 +683,14 @@
                         <span class="project-name">Fractional CTO</span>
                         <span class="project-url">DefinitelyMoreSecure.com</span>
                     </a>
+                </div>
+            </div>
+
+            <!-- Contact Section -->
+            <div class="contact-section">
+                <h3 class="section-title">Get In Touch</h3>
+                <div class="contact-card">
+                    <iframe style="border:none;width:100%;min-height:500px;" id="dknollme-contact-u5j6bv" src="https://opnform.com/forms/dknollme-contact-u5j6bv"></iframe>
                 </div>
             </div>
         </div>
@@ -737,6 +726,7 @@
         </div>
     </footer>
 
+    <script type="text/javascript" onload="initEmbed('dknollme-contact-u5j6bv', { autoResize: true })" src="https://opnform.com/widgets/iframe.min.js"></script>
     <script>
         // Update copyright year dynamically
         document.getElementById('copyright').textContent = `© ${new Date().getFullYear()} DKNOLL`;
